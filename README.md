@@ -1,219 +1,198 @@
-[中文文档](README_zh.md)
+Gemini Watermark Remover
+Remove Gemini AI Watermarks with 100% Client-Side Precision
 
-# Gemini Lossless Watermark Remover - [banana.ovo.re](https://banana.ovo.re)
+Gemini Watermarks Remover is a high-performance, lossless watermark removal tool built specifically to remove Gemini AI visible watermarks from images. Unlike AI inpainting tools that guess missing pixels, this tool uses a mathematically accurate Reverse Alpha Blending algorithm to restore the original image with zero quality loss.
 
-A high-performance, 100% client-side tool for removing Gemini AI watermarks. Built with pure JavaScript, it leverages a mathematically precise **Reverse Alpha Blending** algorithm rather than unpredictable AI inpainting.
+👉 Try the tool now on our homepage:
+https://geminiwatermarksremover.com/
 
-<p align="center">
-  <img src="https://count.getloli.com/@gemini-watermark-remover?name=gemini-watermark-remover&theme=minecraft&padding=7&offset=0&align=top&scale=1&pixelated=1&darkmode=auto" width="400">
-</p>
+Why Gemini Watermarks Remover Is Different
 
-## Features
+Most online watermark removers rely on AI guessing or blur-based filling, which often damages image quality. Our tool works differently.
 
-- ✅ **100% Client-side** - No backend, no server-side processing. Your data stays in your browser.
-- ✅ **Privacy-First** - Images are never uploaded to any server. Period.
-- ✅ **Mathematical Precision** - Based on the Reverse Alpha Blending formula, not "hallucinating" AI models.
-- ✅ **Auto-Detection** - Intelligent recognition of 48×48 or 96×96 watermark variants.
-- ✅ **User Friendly** - Simple drag-and-drop interface with instant processing.
-- ✅ **Cross-Platform** - Runs smoothly on all modern web browsers.
+🔒 100% Client-Side Processing
 
-## Examples
+All image processing happens inside your browser.
+No uploads. No servers. No tracking.
 
-<details open>
-<summary>Click to Expand/Collapse Examples</summary>
-　
-<p>lossless diff example</p>
-<p><img src="docs/lossless_diff.webp"></p>
+Learn more about our privacy approach →
+👉 /privacy-policy
+
+Key Features
+✅ Lossless Watermark Removal
+
+Uses Reverse Alpha Blending, not AI hallucination.
+
+✅ Auto Watermark Detection
+
+Automatically detects:
+
+48×48 Gemini watermark
+
+96×96 Gemini watermark
+
+No manual selection required.
+
+✅ Privacy-First Design
+
+Your images never leave your device.
+
+✅ Instant Processing
+
+Drag, drop, download — takes seconds.
+
+✅ Cross-Browser Support
+
+Works smoothly on:
+
+Chrome
+
+Firefox
+
+Edge
+
+Safari
+
+How Gemini Watermark Removal Works
+Step 1: Understanding Gemini’s Watermark
+
+Gemini applies a semi-transparent watermark using alpha compositing:
+
+watermarked = α × logo + (1 − α) × original
 
 
-<p>example images</p>
+This means the original pixel still exists — it’s just mathematically blended.
 
-| Original Image | Watermark Removed |
-| :---: | :----: |
-| <img src="docs/1.webp" width="400"> | <img src="docs/unwatermarked_1.webp" width="400"> |
-| <img src="docs/2.webp" width="400"> | <img src="docs/unwatermarked_2.webp" width="400"> |
-| <img src="docs/3.webp" width="400"> | <img src="docs/unwatermarked_3.webp" width="400"> |
-| <img src="docs/4.webp" width="400"> | <img src="docs/unwatermarked_4.webp" width="400"> |
-| <img src="docs/5.webp" width="400"> | <img src="docs/unwatermarked_5.webp" width="400"> |
+Step 2: Reverse Alpha Blending (Our Secret Sauce)
 
-</details>
+We reverse the formula:
 
-## ⚠️ Disclaimer
+original = (watermarked − α × logo) / (1 − α)
 
-> [!WARNING]
->  **USE AT YOUR OWN RISK**
->
-> This tool modifies image files. While it is designed to work reliably, unexpected results may occur due to:
-> - Variations in Gemini's watermark implementation
-> - Corrupted or unusual image formats
-> - Edge cases not covered by testing
->
-> The author assumes no responsibility for any data loss, image corruption, or unintended modifications. By using this tool, you acknowledge that you understand these risks.
 
-> [!NOTE]
-> **Note**: Disabling any fingerprint defender extensions (e.g., Canvas Fingerprint Defender) to avoid processing errors. https://github.com/journey-ad/gemini-watermark-remover/issues/3
+By using pre-captured Gemini watermark alpha maps, we recover the original pixels exactly, without guessing.
 
-## Usage
+👉 Read the full technical breakdown:
+/how-gemini-watermark-removal-works
 
-### Online Website
+Supported Gemini Watermark Detection Rules
+Image Condition	Watermark Size	Right Margin	Bottom Margin
+Width > 1024 AND Height > 1024	96 × 96	64px	64px
+Otherwise	48 × 48	32px	32px
 
-1. Open [banana.ovo.re](https://banana.ovo.re).
-2. Drag and drop or click to select your Gemini-generated image.
-3. The engine will automatically process and remove the watermark.
-4. Download the cleaned image.
+This ensures accurate detection across all Gemini-generated images.
 
-### Userscript for Gemini Conversation Pages
+How to Use Gemini Watermarks Remover (Website)
 
-1. Install a userscript manager (e.g., Tampermonkey or Greasemonkey).
-2. Open [gemini-watermark-remover.user.js](https://banana.ovo.re/userscript/gemini-watermark-remover.user.js).
-3. The script will install automatically.
-4. Navigate to Gemini conversation pages.
-5. Click "Copy Image" or "Download Image" to remove the watermark.
+Open https://geminiwatermarksremover.com/
 
-## Development
+Drag & drop your Gemini-generated image
 
-```bash
-# Install dependencies
-pnpm install
+The watermark is detected automatically
 
-# Development build
-pnpm dev
+Download your clean, lossless image
 
-# Production build
-pnpm build
+👉 Start removing watermarks now:
+/remove-gemini-watermark
 
-# Local preview
-pnpm serve
-```
+Browser Compatibility
 
-## How it Works
+The tool works on all modern browsers that support:
 
-### The Gemini Watermarking Process
+ES6 Modules
 
-Gemini applies watermarks using standard alpha compositing:
+Canvas API
 
-$$watermarked = \alpha \cdot logo + (1 - \alpha) \cdot original$$
+Typed Arrays
 
-Where:
-- `watermarked`: The pixel value with the watermark.
-- `α`: The Alpha channel value (0.0 - 1.0).
-- `logo`: The watermark logo color value (White = 255).
-- `original`: The raw, original pixel value we want to recover.
+Async/Await
 
-### The Reverse Solution
+Supported Browsers
 
-To remove the watermark, we solve for `original`:
+Chrome 90+
 
-$$original = \frac{watermarked - \alpha \cdot logo}{1 - \alpha}$$
+Firefox 88+
 
-By capturing the watermark on a known solid background, we reconstruct the exact Alpha map and apply the inverse formula to restore the original pixels with zero loss.
+Safari 14+
 
-## Detection Rules
+Edge 90+
 
-| Image Dimension Condition | Watermark Size | Right Margin | Bottom Margin |
-| :--- | :--- | :--- | :--- |
-| Width > 1024 **AND** Height > 1024 | 96×96 | 64px | 64px |
-| Otherwise | 48×48 | 32px | 32px |
+Limitations (Important to Know)
 
-## Project Structure
+Removes only visible Gemini watermarks
 
-```text
-gemini-watermark-remover/
-├── public/
-│   ├── index.html         # Main page
-│   └── terms.html         # Terms of Service page
-├── src/
-│   ├── core/
-│   │   ├── alphaMap.js    # Alpha map calculation logic
-│   │   ├── blendModes.js  # Implementation of Reverse Alpha Blending
-│   │   └── watermarkEngine.js  # Main engine coordinator
-│   ├── assets/
-│   │   ├── bg_48.png      # Pre-captured 48×48 watermark map
-│   │   └── bg_96.png      # Pre-captured 96×96 watermark map
-│   ├── i18n/              # Internationalization language files
-│   ├── userscript/        # Userscript for Gemini
-│   ├── app.js             # Website application entry point
-│   └── i18n.js            # Internationalization utilities
-├── dist/                  # Build output directory
-├── build.js               # Build script
-└── package.json
-```
+Does NOT remove invisible or SynthID watermarks
 
-## Core Modules
+Designed for current Gemini watermark format (2025)
 
-### alphaMap.js
+Learn more about limitations →
+👉 /limitations
 
-Calculates the Alpha channel by comparing captured watermark assets:
+Legal & Usage Disclaimer
 
-```javascript
-export function calculateAlphaMap(bgCaptureImageData) {
-    // Extract max RGB channel and normalize to [0, 1]
-    const alphaMap = new Float32Array(width * height);
-    for (let i = 0; i < alphaMap.length; i++) {
-        const maxChannel = Math.max(r, g, b);
-        alphaMap[i] = maxChannel / 255.0;
-    }
-    return alphaMap;
-}
-```
+This tool is provided for personal and educational use only.
 
-### blendModes.js
+Removing watermarks may have legal implications depending on:
 
-The mathematical core of the tool:
+Your country
 
-```javascript
-export function removeWatermark(imageData, alphaMap, position) {
-    // Formula: original = (watermarked - α × 255) / (1 - α)
-    for (let row = 0; row < height; row++) {
-        for (let col = 0; col < width; col++) {
-            const alpha = Math.min(alphaMap[idx], MAX_ALPHA);
-            const original = (watermarked - alpha * 255) / (1.0 - alpha);
-            imageData.data[idx] = Math.max(0, Math.min(255, original));
-        }
-    }
-}
-```
+Image ownership
 
-## Browser Compatibility
+Intended usage
 
-- ✅ Chrome 90+
-- ✅ Firefox 88+
-- ✅ Safari 14+
-- ✅ Edge 90+
+Users are fully responsible for complying with:
 
-Required APIs:
-- ES6 Modules
-- Canvas API
-- Async/Await
-- TypedArray (Float32Array, Uint8ClampedArray)
+Copyright laws
 
----
+Platform terms
 
-## Limitations
+Intellectual property rights
 
-- Only removes **Gemini visible watermarks** <small>(the semi-transparent logo in bottom-right)</small>
-- Does not remove invisible/steganographic watermarks. <small>[(Learn more about SynthID)](https://support.google.com/gemini/answer/16722517)</small>
-- Designed for Gemini's current watermark pattern <small>(as of 2025)</small>
+👉 Full disclaimer available at:
+/disclaimer
 
-## Legal Disclaimer
+Open-Source Transparency
 
-This tool is provided for **personal and educational use only**. 
+This project is inspired by the original Gemini Watermark Tool and re-implemented in pure JavaScript for web use.
 
-The removal of watermarks may have legal implications depending on your jurisdiction and the intended use of the images. Users are solely responsible for ensuring their use of this tool complies with applicable laws, terms of service, and intellectual property rights.
+GitHub Repository
 
-The author does not condone or encourage the misuse of this tool for copyright infringement, misrepresentation, or any other unlawful purposes.
+👉 https://github.com/Deepakkmrgautam1
 
-**THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY ARISING FROM THE USE OF THIS SOFTWARE.**
+Explore the source code, report issues, or contribute improvements.
 
-## License
+Internal Links (SEO-Ready)
 
-[MIT License](./LICENSE)
+Use these for your site structure:
 
-## Related Links
+Homepage → /
 
-- [Gemini Watermark Tool](https://github.com/allenk/GeminiWatermarkTool)
-- [Removing Gemini AI Watermarks: A Deep Dive into Reverse Alpha Blending](https://allenkuo.medium.com/removing-gemini-ai-watermarks-a-deep-dive-into-reverse-alpha-blending-bbbd83af2a3f)
+Remove Tool → /remove-gemini-watermark
 
-## Credits
+How It Works → /how-gemini-watermark-removal-works
 
-This project is a JavaScript port of the [Gemini Watermark Tool](https://github.com/allenk/GeminiWatermarkTool) C++ implementation.
+Privacy Policy → /privacy-policy
+
+Terms → /terms
+
+Disclaimer → /disclaimer
+
+GitHub → External link
+
+Final Words
+
+Gemini Watermarks Remover is built for users who care about:
+
+Image quality
+
+Privacy
+
+Transparency
+
+Technical correctness
+
+No AI guessing.
+No uploads.
+No loss.
+
+👉 Start now: https://geminiwatermarksremover.com/
